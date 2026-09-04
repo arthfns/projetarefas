@@ -2,32 +2,32 @@ import { useState, useEffect } from "react"
 import '../estilo.css'
 const Tarefas = () => {
 
-    //HOOK- useState-manipula o estado da variavel
+    //HOOK- useState-Manipula o estado da variável
     const [tarefas, setTarefas] = useState(() => {
-        const salvarTarefas = localStorage.getItem("item-tarefa")
+        const salvarTarefas = localStorage.getItem("item-tarefa");
         return salvarTarefas ? JSON.parse(salvarTarefas) : [];
     });
     const [campo, setCampo] = useState("");
 
-    //HOOK - useEffect -Realiza um efeito colateral, nesse caso atualiza
-    //a tarefa em tempo real
+    //HOOK- useEffect -Realiza um efeito colateral ,nessa
+    //caso atualiza a tarefa em tempo real.
     useEffect(() => {
         localStorage.setItem("item-tarefa", JSON.stringify(tarefas))
     }, [tarefas])
 
-    //FUNCAO adicionar tarefa 
+    //Função Adicionar Tarefa
 
-    const  adicionarTarefa=(e)=>{
-        //previni a pagina fazer recarregamento(upload)
+    const adicionarTarefa = (e) => {
+        //previne a página fazer recarregamento
         e.preventDefault();
-        if(!campo.trim()) return;
-        //trim: espaços vazios
+        if (!campo.trim()) return;
 
-        const novaTarefa={
+        //objeto
+        const novaTarefa = {
             id: Date.now(),
-            text:campo,
+            text: campo,
         };
-        setTarefas([...tarefas,novaTarefas]);
+        setTarefas([...tarefas, novaTarefa]);
         setCampo();
     }
 
@@ -36,8 +36,8 @@ const Tarefas = () => {
         setTarefas(apagarTarefa);
     };
     return (
-    <>
-            <div className="todo-container">
+        <>
+            <div className="max-w-md mx-auto p-6 bg-amber-300 rounded-3xl border border-blue-700 city ">
                 <h2>Minha Lista de Tarefas</h2>
                 {/* chama afunção AdicionarTarefa */}
                 <form onSubmit={adicionarTarefa} className="todo-form">
@@ -72,7 +72,7 @@ const Tarefas = () => {
                 {/* compara se nao tiver mensagems deixa  Nenhuma tarefa salva */}
                 {tarefas.length === 0 && <p className="mensagem">Nenhuma tarefa salva.</p>}
             </div>
-            </>
+        </>
     )
 }
 
